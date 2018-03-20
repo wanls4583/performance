@@ -33,9 +33,9 @@
 </body>
 <script type="text/javascript">
 	//立即执行的微任务将在GUI之前执行，感觉上像是同步，load事件将等待img加载完成再触发
-	Promise.resolve().then(function(){
-		document.querySelector('#test').innerHTML = '<img src="test.png">';
-	})
+	// Promise.resolve().then(function(){
+	// 	document.querySelector('#test').innerHTML = '<img src="test.png">';
+	// })
 	//宏任务将在GUI之后执行，load事件将不会等待img加载完成再触发
 	setTimeout(function(){
 		document.querySelector('#test').innerHTML = '<img src="test.png">';
