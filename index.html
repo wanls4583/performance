@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>性能测试</title>
+	<meta charset="utf-8">
+	<script type="text/javascript">
+		console.log(1,Date.now());
+		document.onreadystatechange = function(){
+			console.log(document.readyState,Date.now());
+		}
+		document.addEventListener("DOMContentLoaded", function(){
+			console.log('DOMContentLoaded',Date.now());
+			var t = Date.now();
+			//domContentLoadedEventEnd-domContentLoadedEventStart的时差
+			while(Date.now()-t<1000){
+
+			}
+		}, false);
+		window.addEventListener("load", function(){
+			console.log('load',Date.now());
+			var t = Date.now();
+			//loadEventEnd-loadEventStart的时差
+			while(Date.now()-t<1000){
+
+			}
+		}, false);
+	</script>
+	<link rel="stylesheet" type="text/css" href="test.css">
+	<script type="text/javascript" src="test.js"></script>
+</head>
+<body>
+	<div id="test"></div>
+</body>
+<script type="text/javascript">
+	//立即执行的微任务将在GUI之前执行，感觉上像是同步，load事件将等待img加载完成再触发
+	Promise.resolve().then(function(){
+		document.querySelector('#test').innerHTML = '<img src="test.png">';
+	})
+	//宏任务将在GUI之后执行，load事件将不会等待img加载完成再触发
+	setTimeout(function(){
+		document.querySelector('#test').innerHTML = '<img src="test.png">';
+	},0)
+	console.log(2,Date.now());
+</script>
+</html>
